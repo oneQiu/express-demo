@@ -13,14 +13,14 @@ PS：以下文档的urlBase均为：http//localhost:4444
 |----|----|----|----|
 | username | String | Y | 用户名 |
 | password | String | Y | 密码 |
-| number | Number | N | 手机号 |
+| admin | Number | N | 0用户 1管理员 |
 | sex | Number | Y | 1男 0女 |
 ### 返回实例
 ```js
     {
         username: '蔡徐坤',
         password: 'cxk',
-        number: 123456,
+        admin: 0,
         sex: 0
     }
 ```
