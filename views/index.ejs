@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <h1>用户列表</h1>
+
+  <table>
+    <tbody>
+      <% for (var i = 0; i < dataList.length; i++) { %>
+        <tr>
+          <td><%= dataList[i].username %></td>
+          <td><%= dataList[i].password %></td>
+          <td><%= dataList[i].number %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>
