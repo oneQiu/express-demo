@@ -4,7 +4,6 @@ const UserModel = require('../model/user');
 const bcrypt = require('bcrypt');
 
 // 用户注册
-
 const reg = (req, res) => {
     // 获取用户名去数据库进行对比
     let name = req.body.username;
@@ -31,7 +30,7 @@ const reg = (req, res) => {
                 code: 0,
                 msg: '用户注册成功'
             })
-        }).catch(err => {
+        }).catch((err) => {
             console.log(err.message);
             res.send({
                 code: -1,
@@ -48,7 +47,7 @@ const login = (req, res) => {
     let password = req.body.password;
     UserModel.findOne({
         username: username
-    }).then(data => {
+    }).then((data) => {
         // data为获取到的数据库的内容，进行判断
         if (!data) {
             res.send({
@@ -79,7 +78,7 @@ const del = (req, res) => {
     let name = req.body.username;
     UserModel.findOne({
         username: name
-    }).then(data => {
+    }).then((data) => {
         // 这个用户是否存在？
         if (!data) {
             res.send({
@@ -96,7 +95,7 @@ const del = (req, res) => {
                 code: 0,
                 msg: '删除成功'
             })
-        }).catch(err => {
+        }).catch((err) => {
             console.log(err);
             res.send({
                 code: -1,
@@ -124,7 +123,7 @@ const update = (req, res) => {
         UserModel.updateOne({
             username: name
         }, {
-            password: pwd?bcrypt.hashSync(pwd, 10):data.password,
+            password: pwd ? bcrypt.hashSync(pwd, 10) : data.password,
             sex: sex || data.sex
         }).then(() => {
             res.send({
@@ -141,6 +140,7 @@ const update = (req, res) => {
 
     })
 }
+
 
 
 
