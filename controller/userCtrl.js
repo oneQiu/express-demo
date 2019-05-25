@@ -2,6 +2,9 @@
 const UserModel = require('../model/user');
 // 加密模块
 const bcrypt = require('bcrypt');
+const path = require('path');
+const fs = require('fs');
+const jwt = require('jsonwebtoken');
 
 // 用户注册
 const reg = (req, res) => {
@@ -59,9 +62,21 @@ const login = (req, res) => {
         let pwd = data.password; //数据库中的密码
         let isOk = bcrypt.compareSync(password, pwd);
         if (isOk) {
+            let token = jwt.sign({
+                id: data._id,
+                username: data.username
+            }, 'icon');
+
             res.send({
                 code: 0,
-                msg: '登录成功'
+                msg: '登录成功',
+                data: {
+                    token: token,
+                    userInfo: {
+                        username: data.username,
+                        icon: data.icon
+                    }
+                }
             })
         } else {
             res.send({
@@ -71,6 +86,44 @@ const login = (req, res) => {
         }
     })
 }
+
+
+// 修改头像
+const upload = (req, res) => {
+    // 添加时间戳，保证上传的图片不同
+    let newFileName = new Date().getTime() + '_' + req.file.originalname;
+    // 拼接文件名
+    let newPath = path.resolve(__dirname, '../public', newFileName);
+    // 获取图片
+    let data = fs.readFileSync(req.file.path);
+    // 在新地址写入图片
+    fs.writeFileSync(newPath, data);
+
+
+
+    // 数据库中修改
+    UserModel.updateOne({
+        _id: req.id
+    }, {
+        icon: `http://localhost:4444/${newFileName}`
+    }).then(() => {
+        res.send({
+            code: 0,
+            msg: '修改成功',
+            data: {
+                icon: `http://localhost:4444/${newFileName}`
+            }
+        })
+    }).catch(err => {
+        console.log(err.message);
+        res.send({
+            code: -1,
+            msg: '头像修改失败'
+        })
+    })
+}
+
+
 
 // 删除用户信息
 const del = (req, res) => {
@@ -149,5 +202,6 @@ module.exports = {
     reg,
     login,
     del,
-    update
+    update,
+    upload
 }

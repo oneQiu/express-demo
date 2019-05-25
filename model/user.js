@@ -14,6 +14,10 @@ const schema = new db.Schema({
         type: Number,
         default: 0
     },
+    icon:{
+        type: String,
+        default: 'http://localhost:4444/icon.png'
+    },
     sex: {
         type: Number,
         default: 0

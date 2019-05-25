@@ -44,7 +44,7 @@ const find = (req, res) => {
 
     stuModel.find({
         stuname: new RegExp(name)
-    }).count().then(num => {
+    }).countDocuments().then(num => {
         // 计算总页数
         let totalPage = Math.ceil(num / pageSize);
         stuModel.find({
@@ -67,7 +67,10 @@ const find = (req, res) => {
         })
     })
 }
-
+// 删除学生
+const delStu = (req, res) => {
+    let stuname = req.body.stuname
+}
 
 module.exports = {
     addStu,

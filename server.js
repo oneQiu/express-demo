@@ -18,6 +18,14 @@ app.use(express.urlencoded({
 // 静态资源托管
 app.use(express.static(path.resolve(__dirname, './public')))
 
+// 设置请求头
+app.use((req,res,next)=>{
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Headers', 'access_token');
+
+    next();
+})
+
 app.use('/api', [userRouter, stuRouter]);
 
 app.listen(4444);
